@@ -1,0 +1,48 @@
+<style>
+            .tahoma
+            {
+                font-family:tahoma;
+                font-weight:bold;
+            }
+            .ex2{
+                font-family:arial;
+                font-weight:bold;
+                font-size:20px;
+            }
+            .ex2nd
+            {
+                color:red;
+                font-style:italic;
+                font-family: arial;
+            }
+            .HTML{
+                font-weight:bold;
+                font-family: verdana;
+                margin-bottom:0px;
+            }
+            .Beginner
+            {
+                font-family: verdana;
+                color:rgb(96,96,96);
+                font-size:15px;
+                margin-top:3px;
+            }
+            .course
+            {   
+                width:300px;
+                font-family: verdana;
+                font-size:14px;
+            }
+            .get-started
+            {
+                background-color:green;
+                color:white;
+                border-radius:7px;
+                border-color:green;
+                padding-left:8ptx;
+                padding-right:8px;
+                padding-top:5px;
+                padding-bottom:5px;
+                cursor:pointer;
+            }
+        </style>
