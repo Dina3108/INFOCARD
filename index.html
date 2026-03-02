@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INFOCARD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-image: url(Files/Gemini_Generated_Image_m6sng2m6sng2m6sn.png);
+        z-index: 1;
+        font-family:
+          Great Vibes,
+          arial;
+      }
+      .head-p {
+        font-size: 75px;
+        color: white;
+      }
+      .head-p2 {
+        font-size: 65px;
+        color: rgb(255, 255, 255);
+      }
+      .apps-div {
+        margin-top: 100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        column-gap: 1%;
+      }
+      .div-1 {
+        border-radius: 150px;
+        width: 200px;
+        height: 200px;
+      }
+
+      .div-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+      .div-img:hover {
+        animation-name: rotate;
+        animation-duration: 4s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: both;
+        animation-delay: 0ms;
+        animation-direction: alternate;
+      }
+      @keyframes rotate {
+        0% {
+          rotate: 0deg;
+        }
+        100% {
+          rotate: 360deg;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h1 class="head-p">InfoCard</h1>
+      <h2 class="head-p2">Brave Hero acts Fearless ... !</h2>
+      <div class="apps-div">
+        <div class="div-1">
+          <a href="https://leetcode.com/u/Dina31_08/" target="_blank">
+            <img class="div-img" src="Files/download.png" />
+          </a>
+        </div>
+        <div class="div-1">
+          <a href="https://www.reddit.com/" target="_blank">
+            <img class="div-img" src="Files/images.jfif" />
+          </a>
+        </div>
+        <div class="div-1">
+          <a href="https://youtube.com" target="_blank">
+            <img
+              class="div-img"
+              src="Files/39426e5c67d13032bac8737654f2d979.jpg"
+            />
+          </a>
+        </div>
+        <div class="div-1">
+          <a href="https://linkedin.com/feed/" target="_blank">
+            <img
+              class="div-img"
+              src="Files/d626b960ce408d98b967970582460092.jpg"
+            />
+          </a>
+        </div>
+        <div class="div-1">
+          <a href="https://mail.google.com/mail/u/1/#inbox/" target="_blank">
+            <img
+              class="div-img"
+              src="Files/88ca31dd5cb5b114063388ce998d33ad.jpg"
+            />
+          </a>
+        </div>
+        <div class="div-1">
+          <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+            <img
+              class="div-img"
+              src="Files/637daabeaaa2abadcd97e4180352cb4a.jpg"
+            />
+          </a>
+        </div>
+      </div>
+    </center>
+  </body>
+</html>
