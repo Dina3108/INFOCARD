@@ -233,6 +233,7 @@
 
         .msg-bubble {
             word-break: break-word;
+            white-space: pre-wrap; /* Preserves multiline line breaks when displaying messages */
             font-size: 0.95rem;
             line-height: 1.5;
             color: #f1f5f9;
@@ -267,9 +268,14 @@
         .copy-btn:hover { color: #ffffff; transform: scale(1.05); }
         .copy-btn.copied { color: #ffffff; }
 
-        .input-area { display: flex; gap: 10px; }
+        /* --- UPDATED MULTI-LINE INPUT AREA CSS --- */
+        .input-area { 
+            display: flex; 
+            gap: 10px; 
+            align-items: flex-end; 
+        }
 
-        .input-area input {
+        .input-area textarea {
             flex-grow: 1;
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--border-default);
@@ -280,14 +286,19 @@
             font-size: 0.95rem;
             font-family: var(--font-sans);
             transition: border-color 0.2s;
+            resize: none;
+            min-height: 48px;
+            max-height: 140px;
+            line-height: 1.4;
         }
 
-        .input-area input:focus { border-color: var(--border-focus); }
+        .input-area textarea:focus { border-color: var(--border-focus); }
 
         .btn {
             background: var(--accent-red);
             color: #ffffff;
             border: none;
+            height: 48px;
             padding: 0 22px;
             border-radius: var(--radius-sm);
             font-weight: 700;
@@ -397,7 +408,7 @@
                 <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
                 <h3>Personal Mail</h3>
             </div>
-            <div class="card" data-platform="pro-mail" data-url="https://outlook.live.com">
+            <div class="card" data-platform="pro-mail" data-url="https://mail.google.com/mail/u/1/#inbox">
                 <div class="icon-wrapper"><i class="fas fa-briefcase"></i></div>
                 <h3>Professional Mail</h3>
             </div>
@@ -426,7 +437,7 @@
                     <h3><i class="far fa-comment-dots" style="color: var(--text-muted);"></i> Messages</h3>
                     <div class="message-display" id="messageDisplay"></div>
                     <div class="input-area">
-                        <input type="text" id="msgInput" placeholder="Type a message or paste links here...">
+                        <textarea id="msgInput" placeholder="Type a message or paste links here..."></textarea>
                         <button class="btn" id="sendBtn">Send</button>
                     </div>
                 </div>
@@ -501,9 +512,21 @@
             };
             db.ref('messages').push(newMsg);
             msgInput.value = '';
+            msgInput.style.height = 'auto'; // Reset height back to standard single line look after submission
         });
 
-        msgInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendBtn.click(); });
+        // HANDLE KEYS: Enter to send, Shift+Enter for New Line. Dynamic layout resize.
+        msgInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        msgInput.addEventListener('keydown', (e) => { 
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault(); 
+                sendBtn.click();
+            }
+        });
 
         // Listen for message updates from any device live
         db.ref('messages').on('value', (snapshot) => {
@@ -512,7 +535,7 @@
                 const msg = childSnapshot.val();
                 const container = document.createElement('div');
                 container.className = 'msg-container';
-                const safeText = msg.text.replace(/'/g, "\\'");
+                const safeText = msg.text.replace(/'/g, "\\'").replace(/\n/g, "\\n");
 
                 container.innerHTML = `
                     <div class="msg-bubble">
