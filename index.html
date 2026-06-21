@@ -1,115 +1,680 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>INFOCARD</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Jost:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INFOCARD Workspace</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-      body {
-        background-image: url(Files/Gemini_Generated_Image_m6sng2m6sng2m6sn.png);
-        background-position: cover;
-        z-index: 1;
-        font-family:
-          Great Vibes,
-          arial;
-      }
-      .head-p {
-        font-size: 75px;
-        color: white;
-      }
-      .head-p2 {
-        font-size: 65px;
-        color: rgb(255, 255, 255);
-      }
-      .apps-div {
-        margin-top: 100px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-        column-gap: 1%;
-      }
-      .div-1 {
-        border-radius: 150px;
-        width: 200px;
-        height: 200px;
-      }
+        /* --- REVOLUTIONARY DARK THEME (WHITE, RED, YELLOW) --- */
+        :root {
+            --bg-main: #0f0505;
+            --panel-bg:transparent;
+            --card-bg: rgba(48, 12, 12, 0.75);
+            
+            --text-main: #f8fafc;        /* White / Cream */
+            --text-muted: #facc15;       /* Soviet Amber Yellow */
+            --success: #facc15;          /* Yellow themed success states */
+            
+            --border-default: #7f1d1d;   /* Defined Red Border */
+            --border-focus: #facc15;     /* Yellow Border Focus */
+            --accent-red: #ef4444;       /* Revolutionary Red */
+            
+            --font-display: 'Syne', sans-serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --radius-main: 16px;
+            --radius-sm: 10px;
+            
+            --anim-bounce: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-      .div-img {
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-      }
-      .div-img:hover {
-        animation-name: rotate;
-        animation-duration: 4s;
-        animation-iteration-count: infinite;
-        animation-fill-mode: both;
-        animation-delay: 0ms;
-        animation-direction: alternate;
-      }
-      @keyframes rotate {
-        0% {
-          rotate: 0deg;
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px 20px;
+            overflow-x: hidden;
+            
+            background-image: 
+                linear-gradient(rgba(15, 5, 5, 0.82), rgba(15, 5, 5, 0.82)), 
+                url('https://images.unsplash.com/photo-1619965375772-32480b549b7e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
-        100% {
-          rotate: 360deg;
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-      }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-main);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-default);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-red);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* --- Header UI without Icon --- */
+        header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 3rem;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+        }
+
+        header p {
+            color: var(--accent-red);
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* --- Grid Settings --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            /* Scales down INFOCARD title cleanly on mobile viewports */
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        /* --- Card Modules --- */
+        .card {
+            background: var(--card-bg);
+            background-color: transparent;
+            border-radius: var(--radius-main);
+            padding: 25px 15px;
+            text-align: center;
+            cursor: pointer;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.3s var(--anim-bounce), 
+                        border-color 0.3s var(--anim-bounce), 
+                        box-shadow 0.3s var(--anim-bounce),
+                        background-color 0.3s var(--anim-bounce);
+        }
+
+        .icon-wrapper {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: var(--text-main);
+            transition: transform 0.3s var(--anim-bounce), color 0.3s var(--anim-bounce);
+        }
+
+        .card h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: color 0.3s var(--anim-bounce);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--text-muted);
+            box-shadow: 0 4px 20px rgba(250, 204, 21, 0.15);
+        }
+        .card:hover h3 {
+            color: var(--text-muted);
+        }
+        .card:hover .icon-wrapper {
+            transform: scale(1.1);
+            color: #ffffff;
+        }
+
+        /* --- Panel Elements --- */
+        .sync-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 950px) {
+            .sync-grid { grid-template-columns: 1fr; }
+        }
+
+        .sync-section {
+            background: var(--panel-bg);
+            border-radius: var(--radius-main);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            height: 520px;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+
+        .sync-section h3 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-default);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+        }
+
+        /* --- Messaging Module --- */
+        .message-display {
+            flex-grow: 1;
+            overflow-y: auto;
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .msg-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            background: var(--card-bg);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            max-width: 90%;
+            align-self: flex-start;
+            gap: 20px;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        
+        .msg-container:hover {
+            border-color: var(--text-muted);
+            background-color: rgba(239, 68, 68, 0.15);
+        }
+
+        .msg-bubble {
+            word-break: break-word;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #f1f5f9;
+        }
+
+        .msg-bubble a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .msg-bubble a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+
+        .msg-time {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            display: block;
+            opacity: 0.8;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 2px;
+            transition: color 0.2s, transform 0.1s;
+        }
+
+        .copy-btn:hover {
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            color: #ffffff;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-area input {
+            flex-grow: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.95rem;
+            font-family: var(--font-sans);
+            transition: border-color 0.2s;
+        }
+
+        .input-area input:focus {
+            border-color: var(--border-focus);
+        }
+
+        .btn {
+            background: var(--accent-red);
+            color: #ffffff;
+            border: none;
+            padding: 0 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn:hover {
+            background-color: var(--text-muted);
+            color: #000000;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* --- Document Management Module --- */
+        .search-box-container {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .search-box-container i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .search-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            padding: 11px 12px 11px 40px;
+            color: var(--text-main);
+            outline: none;
+            font-size: 0.9rem;
+            font-family: var(--font-sans);
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--border-focus);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-default);
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--border-focus);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .upload-area p {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.88rem;
+            color: var(--text-main);
+            margin-top: 4px;
+        }
+
+        .upload-area input { display: none; }
+
+        .file-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .file-item {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-default);
+            transition: border-color 0.2s;
+        }
+
+        .file-item:hover {
+            border-color: var(--border-focus);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 78%;
+        }
+
+        .file-info i { 
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        
+        .file-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+
+        .download-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s var(--anim-bounce);
+        }
+        
+        .download-btn:hover { transform: scale(1.1); color: #ffffff; }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            font-family: var(--font-display);
+            font-size: 0.88rem;
+            margin-top: 20px;
+        }
     </style>
-  </head>
-  <body>
-    <center>
-      <h1 class="head-p">InfoCard</h1>
-      <h2 class="head-p2">Brave Hero acts Fearless ... !</h2>
-      <div class="apps-div">
-        <div class="div-1">
-          <a href="https://leetcode.com/u/Dina31_08/" target="_blank">
-            <img class="div-img" src="Files/download.png" />
-          </a>
-        </div>
-        <div class="div-1">
-          <a href="https://www.reddit.com/" target="_blank">
-            <img class="div-img" src="Files/images.jfif" />
-          </a>
-        </div>
-        <div class="div-1">
-          <a href="https://youtube.com" target="_blank">
-            <img
-              class="div-img"
-              src="Files/39426e5c67d13032bac8737654f2d979.jpg"
-            />
-          </a>
-        </div>
-        <div class="div-1">
-          <a href="https://linkedin.com/feed/" target="_blank">
-            <img
-              class="div-img"
-              src="Files/d626b960ce408d98b967970582460092.jpg"
-            />
-          </a>
-        </div>
-        <div class="div-1">
-          <a href="https://mail.google.com/mail/u/1/#inbox/" target="_blank">
-            <img
-              class="div-img"
-              src="Files/88ca31dd5cb5b114063388ce998d33ad.jpg"
-            />
-          </a>
-        </div>
-        <div class="div-1">
-          <a href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
-            <img
-              class="div-img"
-              src="Files/637daabeaaa2abadcd97e4180352cb4a.jpg"
-            />
-          </a>
-        </div>
-      </div>
-    </center>
-  </body>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>INFOCARD</h1>
+            <p>Brave Hero Acts Fearless</p>
+        </header>
+
+        <main class="dashboard-grid">
+            <div class="card" data-platform="leetcode" data-url="https://leetcode.com">
+                <div class="icon-wrapper"><i class="fa-code-branch fas"></i></div>
+                <h3>LeetCode</h3>
+            </div>
+            <div class="card" data-platform="reddit" data-url="https://www.reddit.com">
+                <div class="icon-wrapper"><i class="fab fa-reddit"></i></div>
+                <h3>Reddit</h3>
+            </div>
+            <div class="card" data-platform="youtube" data-url="https://www.youtube.com">
+                <div class="icon-wrapper"><i class="fab fa-youtube"></i></div>
+                <h3>YouTube</h3>
+            </div>
+            <div class="card" data-platform="linkedin" data-url="https://www.linkedin.com">
+                <div class="icon-wrapper"><i class="fab fa-linkedin"></i></div>
+                <h3>LinkedIn</h3>
+            </div>
+            <div class="card" data-platform="personal-mail" data-url="https://mail.google.com">
+                <div class="icon-wrapper"><i class="fas fa-envelope"></i></div>
+                <h3>Personal Mail</h3>
+            </div>
+            <div class="card" data-platform="pro-mail" data-url="https://outlook.live.com">
+                <div class="icon-wrapper"><i class="fas fa-briefcase"></i></div>
+                <h3>Professional Mail</h3>
+            </div>
+            <div class="card" data-platform="chatgpt" data-url="https://chatgpt.com">
+                <div class="icon-wrapper"><i class="fas fa-brain"></i></div>
+                <h3>ChatGPT</h3>
+            </div>
+            <div class="card" data-platform="screener" data-url="https://www.screener.in">
+                <div class="icon-wrapper"><i class="fas fa-chart-line"></i></div>
+                <h3>Screener</h3>
+            </div>
+            <div class="card" data-platform="groww" data-url="https://groww.in">
+                <div class="icon-wrapper"><i class="fas fa-seedling"></i></div>
+                <h3>Groww</h3>
+            </div>
+            <div class="card" data-platform="zerodha" data-url="https://zerodha.com">
+                <div class="icon-wrapper"><i class="fas fa-wallet"></i></div>
+                <h3>Zerodha</h3>
+            </div>
+        </main>
+
+        <section class="sync-space">
+            <div class="sync-grid">
+                
+                <div class="sync-section">
+                    <h3><i class="far fa-comment-dots" style="color: var(--text-muted);"></i> Messages</h3>
+                    <div class="message-display" id="messageDisplay"></div>
+                    <div class="input-area">
+                        <input type="text" id="msgInput" placeholder="Type a message or paste links here...">
+                        <button class="btn" id="sendBtn">Send</button>
+                    </div>
+                </div>
+
+                <div class="sync-section">
+                    <h3><i class="far fa-folder-open" style="color: var(--text-muted);"></i> Document Drop</h3>
+                    
+                    <div class="search-box-container">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="docSearch" class="search-input" placeholder="Search saved documents...">
+                    </div>
+
+                    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 1.8rem; color: var(--text-muted);"></i>
+                        <p>Click to Upload Document</p>
+                        <input type="file" id="fileInput">
+                    </div>
+
+                    <div class="file-list" id="fileList"></div>
+                </div>
+                
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 1. Navigation Routing
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                const url = card.getAttribute('data-url');
+                if (url) window.open(url, '_blank');
+            });
+        });
+
+        // Regex engine to discover URLs and convert them into hyperlinked HTML
+        function linkify(text) {
+            const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            return text.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
+        }
+
+        // Clip text string out to user clipboard
+        function copyMessageText(btn, textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<i class="far fa-copy"></i>';
+                }, 2000);
+            }).catch(err => {
+                console.error('System Hardware Clipboard error: ', err);
+            });
+        }
+
+        // 2. Chat Processing Room
+        const msgDisplay = document.getElementById('messageDisplay');
+        const msgInput = document.getElementById('msgInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        function loadMessages() {
+            const savedMsgs = JSON.parse(localStorage.getItem('sync_messages')) || [];
+            msgDisplay.innerHTML = '';
+            savedMsgs.forEach((msg) => {
+                const container = document.createElement('div');
+                container.className = 'msg-container';
+                const safeText = msg.text.replace(/'/g, "\\'");
+
+                container.innerHTML = `
+                    <div class="msg-bubble">
+                        ${linkify(msg.text)} 
+                        <span class="msg-time">${msg.time}</span>
+                    </div>
+                    <button class="copy-btn" title="Copy Message" onclick="copyMessageText(this, '${safeText}')">
+                        <i class="far fa-copy"></i>
+                    </button>
+                `;
+                msgDisplay.appendChild(container);
+            });
+            msgDisplay.scrollTop = msgDisplay.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', () => {
+            if (!msgInput.value.trim()) return;
+            const savedMsgs = JSON.parse(localStorage.getItem('sync_messages')) || [];
+            const newMsg = {
+                text: msgInput.value,
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
+            savedMsgs.push(newMsg);
+            localStorage.setItem('sync_messages', JSON.stringify(savedMsgs));
+            msgInput.value = '';
+            loadMessages();
+        });
+
+        msgInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendBtn.click(); });
+
+        // 3. Document Drop Storage & Filtration Management
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const docSearch = document.getElementById('docSearch');
+
+        function loadFiles(filterText = '') {
+            const savedFiles = JSON.parse(localStorage.getItem('sync_files')) || [];
+            fileList.innerHTML = '';
+            
+            const filteredFiles = savedFiles.filter(file => 
+                file.name.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            if (filteredFiles.length === 0) {
+                fileList.innerHTML = `<div class="no-results">No documents found</div>`;
+                return;
+            }
+
+            filteredFiles.reverse().forEach((file) => {
+                const item = document.createElement('div');
+                item.className = 'file-item';
+                item.innerHTML = `
+                    <div class="file-info">
+                        <i class="far fa-file-alt"></i>
+                        <span class="file-name" title="${file.name}">${file.name}</span>
+                    </div>
+                    <a href="${file.data}" download="${file.name}" class="download-btn" title="Download">
+                        <i class="fas fa-download"></i>
+                    </a>
+                `;
+                fileList.appendChild(item);
+            });
+        }
+
+        docSearch.addEventListener('input', (e) => {
+            loadFiles(e.target.value);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const savedFiles = JSON.parse(localStorage.getItem('sync_files')) || [];
+                savedFiles.push({
+                    name: file.name,
+                    data: event.target.result
+                });
+                try {
+                    localStorage.setItem('sync_files', JSON.stringify(savedFiles));
+                    docSearch.value = ''; 
+                    loadFiles();
+                } catch(error) {
+                    alert("Storage capacity exceeded for a local file simulation.");
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+
+        loadMessages();
+        loadFiles();
+    </script>
+</body>
 </html>
