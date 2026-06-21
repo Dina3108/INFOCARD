@@ -10,20 +10,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    
     <style>
         /* --- REVOLUTIONARY DARK THEME (WHITE, RED, YELLOW) --- */
         :root {
             --bg-main: #0f0505;
-            --panel-bg:transparent;
+            --panel-bg: transparent;
             --card-bg: rgba(48, 12, 12, 0.75);
             
-            --text-main: #f8fafc;        /* White / Cream */
-            --text-muted: #facc15;       /* Soviet Amber Yellow */
-            --success: #facc15;          /* Yellow themed success states */
+            --text-main: #f8fafc;        
+            --text-muted: #facc15;       
+            --success: #facc15;          
             
-            --border-default: #7f1d1d;   /* Defined Red Border */
-            --border-focus: #facc15;     /* Yellow Border Focus */
-            --accent-red: #ef4444;       /* Revolutionary Red */
+            --border-default: #7f1d1d;   
+            --border-focus: #facc15;     
+            --accent-red: #ef4444;       
             
             --font-display: 'Syne', sans-serif;
             --font-sans: 'Plus Jakarta Sans', sans-serif;
@@ -82,7 +85,6 @@
             gap: 40px;
         }
 
-        /* --- Header UI without Icon --- */
         header {
             text-align: center;
             margin-bottom: 10px;
@@ -102,6 +104,12 @@
             gap: 14px;
         }
 
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+
         header p {
             color: var(--accent-red);
             font-size: 0.95rem;
@@ -111,7 +119,6 @@
             text-transform: uppercase;
         }
 
-        /* --- Grid Settings --- */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -119,23 +126,13 @@
         }
 
         @media (max-width: 1024px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 480px) {
-            .dashboard-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 12px;
-            }
-            /* Scales down INFOCARD title cleanly on mobile viewports */
-            header h1 {
-                font-size: 2rem;
-            }
+            .dashboard-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
         }
 
-        /* --- Card Modules --- */
         .card {
             background: var(--card-bg);
             background-color: transparent;
@@ -145,10 +142,7 @@
             cursor: pointer;
             backdrop-filter: blur(3px);
             -webkit-backdrop-filter: blur(8px);
-            transition: transform 0.3s var(--anim-bounce), 
-                        border-color 0.3s var(--anim-bounce), 
-                        box-shadow 0.3s var(--anim-bounce),
-                        background-color 0.3s var(--anim-bounce);
+            transition: transform 0.3s var(--anim-bounce), border-color 0.3s var(--anim-bounce), box-shadow 0.3s var(--anim-bounce), background-color 0.3s var(--anim-bounce);
         }
 
         .icon-wrapper {
@@ -172,24 +166,16 @@
             border-color: var(--text-muted);
             box-shadow: 0 4px 20px rgba(250, 204, 21, 0.15);
         }
-        .card:hover h3 {
-            color: var(--text-muted);
-        }
-        .card:hover .icon-wrapper {
-            transform: scale(1.1);
-            color: #ffffff;
-        }
+        .card:hover h3 { color: var(--text-muted); }
+        .card:hover .icon-wrapper { transform: scale(1.1); color: #ffffff; }
 
-        /* --- Panel Elements --- */
         .sync-grid {
             display: grid;
             grid-template-columns: 1.4fr 1fr;
             gap: 24px;
         }
 
-        @media (max-width: 950px) {
-            .sync-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 950px) { .sync-grid { grid-template-columns: 1fr; } }
 
         .sync-section {
             background: var(--panel-bg);
@@ -215,7 +201,6 @@
             color: var(--text-main);
         }
 
-        /* --- Messaging Module --- */
         .message-display {
             flex-grow: 1;
             overflow-y: auto;
@@ -259,10 +244,7 @@
             font-weight: 600;
             transition: color 0.2s;
         }
-        .msg-bubble a:hover {
-            color: #ffffff;
-            text-decoration: underline;
-        }
+        .msg-bubble a:hover { color: #ffffff; text-decoration: underline; }
 
         .msg-time {
             font-size: 0.72rem;
@@ -282,19 +264,10 @@
             transition: color 0.2s, transform 0.1s;
         }
 
-        .copy-btn:hover {
-            color: #ffffff;
-            transform: scale(1.05);
-        }
+        .copy-btn:hover { color: #ffffff; transform: scale(1.05); }
+        .copy-btn.copied { color: #ffffff; }
 
-        .copy-btn.copied {
-            color: #ffffff;
-        }
-
-        .input-area {
-            display: flex;
-            gap: 10px;
-        }
+        .input-area { display: flex; gap: 10px; }
 
         .input-area input {
             flex-grow: 1;
@@ -309,9 +282,7 @@
             transition: border-color 0.2s;
         }
 
-        .input-area input:focus {
-            border-color: var(--border-focus);
-        }
+        .input-area input:focus { border-color: var(--border-focus); }
 
         .btn {
             background: var(--accent-red);
@@ -326,28 +297,11 @@
             transition: background-color 0.2s, transform 0.1s;
         }
 
-        .btn:hover {
-            background-color: var(--text-muted);
-            color: #000000;
-        }
-        .btn:active {
-            transform: scale(0.98);
-        }
+        .btn:hover { background-color: var(--text-muted); color: #000000; }
+        .btn:active { transform: scale(0.98); }
 
-        /* --- Document Management Module --- */
-        .search-box-container {
-            position: relative;
-            margin-bottom: 14px;
-        }
-
-        .search-box-container i {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
+        .search-box-container { position: relative; margin-bottom: 14px; }
+        .search-box-container i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem; }
 
         .search-input {
             width: 100%;
@@ -362,9 +316,7 @@
             transition: border-color 0.2s;
         }
 
-        .search-input:focus {
-            border-color: var(--border-focus);
-        }
+        .search-input:focus { border-color: var(--border-focus); }
 
         .upload-area {
             border: 2px dashed var(--border-default);
@@ -377,28 +329,11 @@
             transition: border-color 0.2s, background-color 0.2s;
         }
 
-        .upload-area:hover {
-            border-color: var(--border-focus);
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        .upload-area p {
-            font-family: var(--font-display);
-            font-weight: 700;
-            font-size: 0.88rem;
-            color: var(--text-main);
-            margin-top: 4px;
-        }
-
+        .upload-area:hover { border-color: var(--border-focus); background: rgba(239, 68, 68, 0.1); }
+        .upload-area p { font-family: var(--font-display); font-weight: 700; font-size: 0.88rem; color: var(--text-main); margin-top: 4px; }
         .upload-area input { display: none; }
 
-        .file-list {
-            flex-grow: 1;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        .file-list { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
 
         .file-item {
             background: rgba(0, 0, 0, 0.2);
@@ -411,30 +346,12 @@
             transition: border-color 0.2s;
         }
 
-        .file-item:hover {
-            border-color: var(--border-focus);
-        }
+        .file-item:hover { border-color: var(--border-focus); }
 
-        .file-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            max-width: 78%;
-        }
-
-        .file-info i { 
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
+        .file-info { display: flex; align-items: center; gap: 10px; max-width: 78%; }
+        .file-info i { color: var(--text-muted); font-size: 1rem; }
         
-        .file-name {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #cbd5e1;
-        }
+        .file-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.9rem; font-weight: 500; color: #cbd5e1; }
 
         .download-btn {
             color: var(--text-muted);
@@ -448,14 +365,7 @@
         }
         
         .download-btn:hover { transform: scale(1.1); color: #ffffff; }
-
-        .no-results {
-            text-align: center;
-            color: var(--text-muted);
-            font-family: var(--font-display);
-            font-size: 0.88rem;
-            margin-top: 20px;
-        }
+        .no-results { text-align: center; color: var(--text-muted); font-family: var(--font-display); font-size: 0.88rem; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -543,6 +453,17 @@
     </div>
 
     <script>
+        // Verified Firebase configuration parameters with API database link repaired
+        const firebaseConfig = {
+            apiKey: "AIzaSyDG0PY80kQioLNTiGJhaAVJNHvuqxguGOU",
+            databaseURL: "https://infocard-f287a-default-rtdb.firebaseio.com/",
+            projectId: "infocard-f287a"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         // 1. Navigation Routing
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', () => {
@@ -551,13 +472,11 @@
             });
         });
 
-        // Regex engine to discover URLs and convert them into hyperlinked HTML
         function linkify(text) {
             const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
             return text.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
         }
 
-        // Clip text string out to user clipboard
         function copyMessageText(btn, textToCopy) {
             navigator.clipboard.writeText(textToCopy).then(() => {
                 btn.classList.add('copied');
@@ -566,20 +485,31 @@
                     btn.classList.remove('copied');
                     btn.innerHTML = '<i class="far fa-copy"></i>';
                 }, 2000);
-            }).catch(err => {
-                console.error('System Hardware Clipboard error: ', err);
-            });
+            }).catch(err => console.error(err));
         }
 
-        // 2. Chat Processing Room
+        // 2. Realtime Firebase Chat Integration
         const msgDisplay = document.getElementById('messageDisplay');
         const msgInput = document.getElementById('msgInput');
         const sendBtn = document.getElementById('sendBtn');
 
-        function loadMessages() {
-            const savedMsgs = JSON.parse(localStorage.getItem('sync_messages')) || [];
+        sendBtn.addEventListener('click', () => {
+            if (!msgInput.value.trim()) return;
+            const newMsg = {
+                text: msgInput.value,
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
+            db.ref('messages').push(newMsg);
+            msgInput.value = '';
+        });
+
+        msgInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendBtn.click(); });
+
+        // Listen for message updates from any device live
+        db.ref('messages').on('value', (snapshot) => {
             msgDisplay.innerHTML = '';
-            savedMsgs.forEach((msg) => {
+            snapshot.forEach((childSnapshot) => {
+                const msg = childSnapshot.val();
                 const container = document.createElement('div');
                 container.className = 'msg-container';
                 const safeText = msg.text.replace(/'/g, "\\'");
@@ -589,49 +519,49 @@
                         ${linkify(msg.text)} 
                         <span class="msg-time">${msg.time}</span>
                     </div>
-                    <button class="copy-btn" title="Copy Message" onclick="copyMessageText(this, '${safeText}')">
+                    <button class="copy-btn" title="Copy" onclick="copyMessageText(this, '${safeText}')">
                         <i class="far fa-copy"></i>
                     </button>
                 `;
                 msgDisplay.appendChild(container);
             });
             msgDisplay.scrollTop = msgDisplay.scrollHeight;
-        }
-
-        sendBtn.addEventListener('click', () => {
-            if (!msgInput.value.trim()) return;
-            const savedMsgs = JSON.parse(localStorage.getItem('sync_messages')) || [];
-            const newMsg = {
-                text: msgInput.value,
-                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
-            };
-            savedMsgs.push(newMsg);
-            localStorage.setItem('sync_messages', JSON.stringify(savedMsgs));
-            msgInput.value = '';
-            loadMessages();
         });
 
-        msgInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') sendBtn.click(); });
-
-        // 3. Document Drop Storage & Filtration Management
+        // 3. Realtime Firebase File Drop Integration
         const fileInput = document.getElementById('fileInput');
         const fileList = document.getElementById('fileList');
         const docSearch = document.getElementById('docSearch');
+        let localFilesArray = [];
 
-        function loadFiles(filterText = '') {
-            const savedFiles = JSON.parse(localStorage.getItem('sync_files')) || [];
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const fileData = {
+                    name: file.name,
+                    data: event.target.result
+                };
+                db.ref('files').push(fileData).catch(() => {
+                    alert("File payload exceeds free data parameters.");
+                });
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function renderFilesList(filterText = '') {
             fileList.innerHTML = '';
+            const filtered = localFilesArray.filter(file => file.name.toLowerCase().includes(filterText.toLowerCase()));
             
-            const filteredFiles = savedFiles.filter(file => 
-                file.name.toLowerCase().includes(filterText.toLowerCase())
-            );
-
-            if (filteredFiles.length === 0) {
+            if (filtered.length === 0) {
                 fileList.innerHTML = `<div class="no-results">No documents found</div>`;
                 return;
             }
 
-            filteredFiles.reverse().forEach((file) => {
+            // Newest uploaded files will cleanly reverse to sit at the top row slot
+            [...filtered].reverse().forEach((file) => {
                 const item = document.createElement('div');
                 item.className = 'file-item';
                 item.innerHTML = `
@@ -647,34 +577,16 @@
             });
         }
 
-        docSearch.addEventListener('input', (e) => {
-            loadFiles(e.target.value);
+        docSearch.addEventListener('input', (e) => renderFilesList(e.target.value));
+
+        // Listen for document additions across hardware networks
+        db.ref('files').on('value', (snapshot) => {
+            localFilesArray = [];
+            snapshot.forEach((childSnapshot) => {
+                localFilesArray.push(childSnapshot.val());
+            });
+            renderFilesList(docSearch.value);
         });
-
-        fileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const savedFiles = JSON.parse(localStorage.getItem('sync_files')) || [];
-                savedFiles.push({
-                    name: file.name,
-                    data: event.target.result
-                });
-                try {
-                    localStorage.setItem('sync_files', JSON.stringify(savedFiles));
-                    docSearch.value = ''; 
-                    loadFiles();
-                } catch(error) {
-                    alert("Storage capacity exceeded for a local file simulation.");
-                }
-            };
-            reader.readAsDataURL(file);
-        });
-
-        loadMessages();
-        loadFiles();
     </script>
 </body>
 </html>
